@@ -1,0 +1,14 @@
+plugins {
+    id "org.jetbrains.intellij" version "0.2.18"
+}
+
+apply plugin: 'org.jetbrains.intellij'
+
+intellij {
+    version '2017.3.5'
+    pluginName 'CleanCodeMethodRearranger'
+    intellij.updateSinceUntilBuild false //Disables updating since-build attribute in plugin.xml
+}
+
+group 'com.jucham'
+version '0.1'

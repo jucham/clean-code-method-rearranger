@@ -1,0 +1,40 @@
+<idea-plugin>
+    <id>com.jucham</id>
+    <name>Clean Code Method Rearranger</name>
+    <version>0.1</version>
+    <vendor email="julien.champalbert@gmail.com" url="github.com/jucham/CleanCodeMethodRearranger">Julien Champalbert</vendor>
+
+    <description><![CDATA[
+      Rearranges the methods in Java classes according to the Robert C. Martin's Step-down Rule.<br>
+      Features :<br>
+      <ul>
+         <li>Rearranges methods of Java classes</li>
+         <li>Supports inner classes</li>
+      </ul>
+
+    ]]></description>
+
+    <change-notes><![CDATA[
+      Release 0.1: Initial release.<br>
+    ]]>
+    </change-notes>
+
+    <idea-version since-build="173"/>
+
+    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+         on how to target different products -->
+    <!-- uncomment to enable plugin in all products
+    <depends>com.intellij.modules.lang</depends>
+    -->
+
+    <extensions defaultExtensionNs="com.intellij">
+    </extensions>
+
+    <actions>
+        <action id="RearrangeMethods" class="com.jucham.action.RearrangeMethodsAction" text="Rearrange Methods"
+                description="Rearrange Methods according to Stepdown Rule">
+            <add-to-group group-id="CodeFormatGroup" anchor="last"/>
+        </action>
+    </actions>
+
+</idea-plugin>
