@@ -1,8 +1,8 @@
 <idea-plugin>
     <id>com.jucham</id>
     <name>Clean Code Method Rearranger</name>
-    <version>0.1</version>
-    <vendor email="julien.champalbert@gmail.com" url="github.com/jucham/CleanCodeMethodRearranger">Julien Champalbert</vendor>
+    <version>0.2</version>
+    <vendor email="julien.champalbert@gmail.com" url="https://github.com/jucham/clean-code-method-rearranger">Julien Champalbert</vendor>
 
     <description><![CDATA[
       Rearranges the methods in Java classes according to the Robert C. Martin's Step-down Rule.<br>
@@ -16,16 +16,13 @@
 
     <change-notes><![CDATA[
       Release 0.1: Initial release.<br>
+      Release 0.2: Fixes problem with a certain count of methods.<br>
     ]]>
     </change-notes>
 
     <idea-version since-build="173"/>
 
-    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
-         on how to target different products -->
-    <!-- uncomment to enable plugin in all products
-    <depends>com.intellij.modules.lang</depends>
-    -->
+    <depends>com.intellij.modules.java</depends>
 
     <extensions defaultExtensionNs="com.intellij">
     </extensions>

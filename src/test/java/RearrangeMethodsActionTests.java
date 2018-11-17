@@ -75,4 +75,8 @@ public class RearrangeMethodsActionTests extends LightPlatformCodeInsightFixture
         testRearrangeMethods("ClassWithMixedFieldsAndMethods");
     }
 
+    public void testClassWithPlentyMethods() {
+        testRearrangeMethods("ClassWithPlentyMethods");
+    }
+
 }

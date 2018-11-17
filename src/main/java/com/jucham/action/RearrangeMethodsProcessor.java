@@ -47,8 +47,8 @@ class RearrangeMethodsProcessor {
             MethodCallGraph methodCallGraph = new MethodCallGraph(psiClass);
             List<MethodNode> rearrangedMethodNodes = MethodRearranger.getRearrangedMethods(methodCallGraph);
             String indent = computeIndent(document, psiClass);
-            deleteMethodsInDocument(document, psiClass, documentManager);
-            insertRearrangedMethodsInDocument(document, psiClass, documentManager, rearrangedMethodNodes, indent);
+            psiClass = deleteMethodsInDocument(document, psiClass, documentManager);
+            psiClass = insertRearrangedMethodsInDocument(document, psiClass, documentManager, rearrangedMethodNodes, indent);
             for (PsiClass innerClass : psiClass.getInnerClasses()) {
                 rearrangeClassSourceCode(document, innerClass, documentManager);
             }
@@ -75,16 +75,15 @@ class RearrangeMethodsProcessor {
         return indentOffset;
     }
 
-    private void deleteMethodsInDocument(Document document, PsiClass psiClass, PsiDocumentManager documentManager) {
+    private PsiClass deleteMethodsInDocument(Document document, PsiClass psiClass, PsiDocumentManager documentManager) {
         PsiMethod[] methods = psiClass.getMethods();
         for (int i = methods.length - 1; i >= 0; i--) {
             document.deleteString(methods[i].getTextRange().getStartOffset(), methods[i].getTextRange().getEndOffset());
         }
-        documentManager.commitDocument(document);
+        return commitDocumentAndGetFreshClassFromFile(psiClass.getName());
     }
 
-    private void insertRearrangedMethodsInDocument(Document document, PsiClass psiClass, PsiDocumentManager documentManager, List<MethodNode> rearrangedMethodNodes, String indent) {
-        // find position of first method
+    private PsiClass insertRearrangedMethodsInDocument(Document document, PsiClass psiClass, PsiDocumentManager documentManager, List<MethodNode> rearrangedMethodNodes, String indent) {
         int offset;
         PsiField[] fields = psiClass.getFields();
         if (fields.length > 0) {
@@ -100,12 +99,38 @@ class RearrangeMethodsProcessor {
             offset += textInserted.length();
             offset = insertTwoLineFeeds(document, offset);
         }
-        documentManager.commitDocument(document);
+        return commitDocumentAndGetFreshClassFromFile(psiClass.getName());
     }
 
     private int insertTwoLineFeeds(Document document, final int offset) {
         document.insertString(offset, "\n\n");
         return offset + 2;
+    }
+
+    private static PsiClass searchClassInFileByName(PsiJavaFile psiJavaFile, String className) {
+        for (PsiClass psiClass : psiJavaFile.getClasses()) {
+            PsiClass foundClass = searchClassByName(psiClass, className);
+            if (foundClass != null)
+                return foundClass;
+        }
+        return null;
+    }
+
+    private static PsiClass searchClassByName(PsiClass psiClass, String className) {
+        if (psiClass.getName().equals(className)) {
+            return psiClass;
+        }
+        for (PsiClass innerClass : psiClass.getInnerClasses()) {
+            PsiClass foundClass = searchClassByName(innerClass, className);
+            if (foundClass != null)
+                return foundClass;
+        }
+        return null;
+    }
+
+    private PsiClass commitDocumentAndGetFreshClassFromFile(String className) {
+        documentManager.commitDocument(document);
+        return searchClassInFileByName(javaFile, className);
     }
 
     private void removeUselessLineFeeds(Document document) {
