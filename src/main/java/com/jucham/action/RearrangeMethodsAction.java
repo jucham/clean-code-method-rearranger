@@ -8,6 +8,7 @@ import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.actionSystem.LangDataKeys;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
+import com.intellij.openapi.editor.ScrollType;
 import com.intellij.openapi.fileEditor.FileDocumentManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.Messages;
@@ -15,11 +16,13 @@ import com.intellij.psi.PsiBundle;
 import com.intellij.psi.PsiDocumentManager;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiJavaFile;
+import com.jucham.caret.CaretPositionBackup;
 
 /**
  * This action is intended to rearrange methods according to Robert C. Martin's Step-down Rule
  */
 public class RearrangeMethodsAction extends AnAction {
+
 
     @Override
     public void update(AnActionEvent anActionEvent) {
@@ -58,7 +61,14 @@ public class RearrangeMethodsAction extends AnAction {
             return;
         }
 
+        CaretPositionBackup cpb = new CaretPositionBackup();
+        cpb.saveCaretLogicalPosition(javaFile, project, editor);
+
         new RearrangeMethodsProcessor(javaFile, document, documentManager).run();
+
+        int caretOffset = cpb.restoreCaretOffset(javaFile);
+        editor.getCaretModel().moveToOffset(caretOffset);
+        editor.getScrollingModel().scrollToCaret(ScrollType.MAKE_VISIBLE);
     }
 
 }

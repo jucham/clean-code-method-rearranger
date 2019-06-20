@@ -9,7 +9,7 @@ public class OneSimpleClass {
     private int someInt;
     private String someString;
 
-    public void method1() {
+    public void method1(String str1, Integer num) {
         StringTokenizer st = new StringTokenizer("");
         BigDecimal bd = BigDecimal.ZERO;
         method2();

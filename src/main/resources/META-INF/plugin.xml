@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>com.jucham</id>
     <name>Clean Code Method Rearranger</name>
-    <version>0.2</version>
+    <version>0.3</version>
     <vendor email="julien.champalbert@gmail.com" url="https://github.com/jucham/clean-code-method-rearranger">Julien Champalbert</vendor>
 
     <description><![CDATA[
@@ -17,6 +17,7 @@
     <change-notes><![CDATA[
       Release 0.1: Initial release.<br>
       Release 0.2: Fixes problem with a certain count of methods.<br>
+      Release 0.3: Keep caret position after reformatting<br>
     ]]>
     </change-notes>
 

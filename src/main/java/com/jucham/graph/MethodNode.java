@@ -24,12 +24,12 @@ public class MethodNode {
         return method.getText();
     }
 
-    public void addCalledMethod(MethodNode methodNode) {
+    void addCalledMethod(MethodNode methodNode) {
         methodNode.isRoot = false;
         calledMethodNodes.add(methodNode);
     }
 
-    public boolean isRoot() {
+    boolean isRoot() {
         return isRoot;
     }
 

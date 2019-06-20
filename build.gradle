@@ -10,5 +10,12 @@ intellij {
     intellij.updateSinceUntilBuild false
 }
 
+
+publishPlugin {
+    username intellijPublishUsername
+    password intellijPublishPassword
+}
+
+
 group 'com.jucham'
-version '0.2'
+version '0.3'

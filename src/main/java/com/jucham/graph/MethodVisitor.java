@@ -43,7 +43,7 @@ class MethodVisitor extends PsiRecursiveElementWalkingVisitor {
         super.visitElement(element);
     }
 
-    public LinkedHashSet<PsiMethod> harvestCalledMethods() {
+    LinkedHashSet<PsiMethod> harvestCalledMethods() {
         LinkedHashSet<PsiMethod> calledMethods = new LinkedHashSet<>(this.calledMethods);
         this.calledMethods.clear();
         return calledMethods;
