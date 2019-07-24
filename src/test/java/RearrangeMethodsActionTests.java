@@ -105,6 +105,14 @@ public class RearrangeMethodsActionTests extends LightPlatformCodeInsightFixture
         testRearrangeMethods("ClassWithPlentyMethods");
     }
 
+    public void testClassWithMultipleUsageOfACommonMethod1() {
+        testRearrangeMethods("ClassWithMultipleUsageOfACommonMethod1");
+    }
+
+    public void testClassWithMultipleUsageOfACommonMethod2() {
+        testRearrangeMethods("ClassWithMultipleUsageOfACommonMethod2");
+    }
+
     public void testCaretPosition_BetweenMethods1() {
         testCaretPositionAfterRearrangeMethods("OneSimpleClass", 12, 14, 27, 5);
     }

@@ -12,6 +12,7 @@ import static java.util.stream.Collectors.toList;
 
 public class MethodCallGraph {
 
+    private Map<MethodNode, Integer> numberOfCallsByMethod = new HashMap<>();
     private List<MethodNode> methodNodes;
 
     public MethodCallGraph(PsiClass psiClass) {
@@ -35,6 +36,7 @@ public class MethodCallGraph {
                 if(calledMethod.equals(method))
                     continue;
                 MethodNode calledMethodNode = getOrCreateMethodNode(methodNodeById, calledMethod);
+                updateNumberOfCallsOfMethod(calledMethodNode);
                 methodNode.addCalledMethod(calledMethodNode);
             }
         }
@@ -45,9 +47,17 @@ public class MethodCallGraph {
         return methodNodeById.computeIfAbsent(method.getSignature(PsiSubstitutor.EMPTY), k -> new MethodNode(method));
     }
 
+    private void updateNumberOfCallsOfMethod(MethodNode calledMethodNode) {
+        numberOfCallsByMethod.merge(calledMethodNode, 1, Integer::sum);
+    }
+
     public List<MethodNode> getRootMethodNodes() {
         return methodNodes.stream()
                 .filter(MethodNode::isRoot)
                 .collect(collectingAndThen(toList(), Collections::unmodifiableList));
+    }
+
+    public Map<MethodNode, Integer> getNumberOfCallsByMethods() {
+        return numberOfCallsByMethod;
     }
 }

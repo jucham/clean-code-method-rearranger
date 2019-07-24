@@ -45,7 +45,8 @@ class RearrangeMethodsProcessor {
     private void rearrangeClassSourceCode(Document document, PsiClass psiClass) {
         if (psiClass.getMethods().length > 1) {
             MethodCallGraph methodCallGraph = new MethodCallGraph(psiClass);
-            List<MethodNode> rearrangedMethodNodes = MethodRearranger.getRearrangedMethods(methodCallGraph);
+            MethodRearranger methodRearranger = new MethodRearranger(methodCallGraph);
+            List<MethodNode> rearrangedMethodNodes = methodRearranger.getRearrangedMethods();
             String indent = computeIndent(document, psiClass);
             psiClass = deleteMethodsInDocument(document, psiClass);
             psiClass = insertRearrangedMethodsInDocument(document, psiClass, rearrangedMethodNodes, indent);
