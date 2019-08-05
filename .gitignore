@@ -9,4 +9,3 @@ bin/
 out/
 gradlew
 gradlew.bat
-gradle.properties
